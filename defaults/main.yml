@@ -11,23 +11,5 @@ git_pkg_version:
 git_pkg_state: present
 git_authorize_github: false
 git_authorize_bitbucket: false
-git_config:
-  core:
-    autocrlf: false
-  color:
-    branch: auto
-    diff: auto
-    interactive: auto
-    status: auto
-  push:
-    default: matching
-git_users:
-  - username: vagrant
-    group: vagrant
-    mode: 0644
-    git_config:
-      user:
-        name: Adam Dyson
-        email: adam.dyson@outlook.com
-      github:
-        user: adamdyson
+git_config: {}
+git_users: []

@@ -56,14 +56,14 @@ git_authorize_bitbucket: false
 Whether to add BitBucket to SSH known hosts, valid values are `true` or `false`.
 
 ```
-git_config:
+git_config: {}
 ```
 
 The system Git configuration, these values are stored in the file `/etc/gitconfig` which is
 the first place Git looks.
 
 ```
-git_users:
+git_users: []
 ```
 
 The global Git configuration, these values are stored in the file `~/.gitconfig` which is specific to each user.
