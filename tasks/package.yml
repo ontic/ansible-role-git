@@ -1,0 +1,52 @@
+# This source file is subject to the (Open Source Initiative) BSD license
+# that is bundled with this package in the LICENSE file. It is also available
+# through the world-wide-web at this URL: http://www.ontic.com.au/license.html
+# If you did not receive a copy of the license and are unable to obtain it through
+# the world-wide-web, please send an email to license@ontic.com.au immediately.
+# Copyright (c) 2010-2015 Ontic. (http://www.ontic.com.au). All rights reserved.
+
+---
+
+- name: Git | Debian | Install specific Git version.
+  sudo: yes
+  apt:
+    pkg: 'git={{ git_pkg_version }}'
+    state: present
+    update_cache: yes
+    cache_valid_time: 3600
+  when: ansible_os_family == 'Debian' and git_pkg_version
+  tags:
+    - package
+    - git
+
+- name: Git | RedHat | Install specific Git version.
+  sudo: yes
+  yum:
+    name: 'git={{ git_pkg_version }}'
+    state: present
+  when: ansible_os_family == 'RedHat' and git_pkg_version
+  tags:
+    - package
+    - git
+
+- name: Git | Debian | Install latest Git version.
+  sudo: yes
+  apt:
+    pkg: git
+    state: '{{ git_pkg_state }}'
+    update_cache: yes
+    cache_valid_time: 3600
+  when: ansible_os_family == 'Debian' and not git_pkg_version
+  tags:
+    - package
+    - git
+
+- name: Git | RedHat | Install latest Git version.
+  sudo: yes
+  yum:
+    name: git
+    state: '{{ git_pkg_state }}'
+  when: ansible_os_family == 'RedHat' and not git_pkg_version
+  tags:
+    - package
+    - git

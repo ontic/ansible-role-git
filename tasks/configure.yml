@@ -1,0 +1,63 @@
+# This source file is subject to the (Open Source Initiative) BSD license
+# that is bundled with this package in the LICENSE file. It is also available
+# through the world-wide-web at this URL: http://www.ontic.com.au/license.html
+# If you did not receive a copy of the license and are unable to obtain it through
+# the world-wide-web, please send an email to license@ontic.com.au immediately.
+# Copyright (c) 2010-2015 Ontic. (http://www.ontic.com.au). All rights reserved.
+
+---
+
+- name: Git | Configure SSH known hosts file with GitHub key.
+  sudo: yes
+  lineinfile:
+    regexp: '^github\.com'
+    line: '{{ lookup("pipe", "ssh-keyscan -t rsa github.com") }}'
+    dest: /etc/ssh/ssh_known_hosts
+    create: true
+    owner: root
+    group: root
+    mode: 0600
+    state: "{{ git_authorize_github | ternary('present', 'absent') }}"
+  tags:
+    - configure
+    - git
+
+- name: Git | Configure SSH known hosts file with BitBucket key.
+  sudo: yes
+  lineinfile:
+    regexp: '^bitbucket\.org'
+    line: '{{ lookup("pipe", "ssh-keyscan -t rsa bitbucket.org") }}'
+    dest: /etc/ssh/ssh_known_hosts
+    create: true
+    owner: root
+    group: root
+    mode: 0600
+    state: "{{ git_authorize_bitbucket | ternary('present', 'absent') }}"
+  tags:
+    - configure
+    - git
+
+- name: Git | Configure system Git config file.
+  sudo: yes
+  template:
+    src: system_gitconfig.j2
+    dest: /etc/gitconfig
+    owner: root
+    group: root
+    mode: 0644
+  tags:
+    - configure
+    - git
+
+- name: Git | Configure users Git config file.
+  sudo: yes
+  template:
+    src: user_gitconfig.j2
+    dest: '/home/{{ item.username }}/.gitconfig'
+    owner: '{{ item.username }}'
+    group: '{{ item.group | default(item.username) }}'
+    mode:  '{{ item.mode | default(0644) }}'
+  with_items: git_users
+  tags:
+    - configure
+    - git
