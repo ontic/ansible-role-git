@@ -3,6 +3,7 @@
 ## Example
 
 ```
+git_repository: ppa:git-core/ppa
 git_authorize_github: true
 git_authorize_bitbucket: true
 git_config:
@@ -30,6 +31,12 @@ git_users:
 ## Role Variables
 
 Available variables are listed below, along with default values (see [defaults/main.yml](/defaults/main.yml)):
+
+```
+git_repository:
+```
+
+The repository to add to APT. Which would allow more recent versions of Git to be installed.
 
 ```
 git_pkg_version:

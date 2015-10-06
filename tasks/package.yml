@@ -7,6 +7,16 @@
 
 ---
 
+- name: Git | Debian | Add APT repository.
+  sudo: yes
+  apt_repository:
+    repo: '{{ git_repository }}'
+    update_cache: yes
+  when: ansible_os_family == 'Debian' and git_repository
+  tags:
+    - package
+    - git
+
 - name: Git | Debian | Install specific Git version.
   sudo: yes
   apt:
