@@ -7,56 +7,49 @@
 
 ---
 
-- name: Git | Debian | Add APT repository.
+- name: Git | Debian | Add launchpad PPA.
   sudo: yes
   apt_repository:
-    repo: '{{ git_repository }}'
+    repo: '{{ git_ppa }}'
     update_cache: yes
-  when: ansible_os_family == 'Debian' and git_repository
+  when: ansible_os_family == 'Debian' and git_ppa
   tags:
     - package
     - git
 
-- name: Git | Debian | Install specific Git version.
+- name: Git | Debian | Install Git packages.
   sudo: yes
   apt:
-    pkg: 'git={{ git_pkg_version }}'
-    state: present
-    update_cache: yes
-    cache_valid_time: 3600
-  when: ansible_os_family == 'Debian' and git_pkg_version
+    name: '{{ item.name if item.version is not defined else item.name + "=" + item.version }}'
+    cache_valid_time: '{{ item.cache_valid_time | default(omit) }}'
+    deb: '{{ item.deb | default(omit) }}'
+    default_release: '{{ item.default_release | default(omit) }}'
+    dpkg_options: '{{ item.dpkg_options | default(omit) }}'
+    force: '{{ item.force | default(omit) }}'
+    install_recommends: '{{ item.install_recommends | default(omit) }}'
+    purge: '{{ item.purge | default(omit) }}'
+    state: '{{ item.state | default(omit) }}'
+    update_cache: '{{ item.update_cache | default(omit) }}'
+  with_items: git_packages
+  when: ansible_os_family == 'Debian' and git_packages
   tags:
     - package
     - git
 
-- name: Git | RedHat | Install specific Git version.
+- name: Git | RedHat | Install Git packages.
   sudo: yes
   yum:
-    name: 'git={{ git_pkg_version }}'
-    state: present
-  when: ansible_os_family == 'RedHat' and git_pkg_version
-  tags:
-    - package
-    - git
-
-- name: Git | Debian | Install latest Git version.
-  sudo: yes
-  apt:
-    pkg: git
-    state: '{{ git_pkg_state }}'
-    update_cache: yes
-    cache_valid_time: 3600
-  when: ansible_os_family == 'Debian' and not git_pkg_version
-  tags:
-    - package
-    - git
-
-- name: Git | RedHat | Install latest Git version.
-  sudo: yes
-  yum:
-    name: git
-    state: '{{ git_pkg_state }}'
-  when: ansible_os_family == 'RedHat' and not git_pkg_version
+    name: '{{ item.name if item.version is not defined else item.name + "-" + item.version }}'
+    conf_file: '{{ item.conf_file | default(omit) }}'
+    disable_gpg_check: '{{ item.disable_gpg_check | default(omit) }}'
+    disablerepo: '{{ item.disablerepo | default(omit) }}'
+    enablerepo: '{{ item.enablerepo | default(omit) }}'
+    exclude: '{{ item.exclude | default(omit) }}'
+    list: '{{ item.list | default(omit) }}'
+    state: '{{ item.state | default(omit) }}'
+    update_cache: '{{ item.update_cache | default(omit) }}'
+  with_items: git_packages
+  when: ansible_os_family == 'RedHat' and git_packages
   tags:
     - package
     - git

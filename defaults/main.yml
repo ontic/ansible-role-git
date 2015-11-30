@@ -7,10 +7,9 @@
 
 ---
 
-git_repository:
-git_pkg_version:
-git_pkg_state: present
-git_authorize_github: false
-git_authorize_bitbucket: false
-git_config: {}
-git_users: []
+git_ppa:
+git_packages:
+git_authorize_github: no
+git_authorize_bitbucket: no
+git_config:
+git_users:

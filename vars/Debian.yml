@@ -7,13 +7,5 @@
 
 ---
 
-- name: Git | Include OS-specific variables.
-  include_vars: '{{ ansible_os_family }}.yml'
-
-- name: Git | Define Git packages.
-  set_fact:
-    git_packages: '{{ git_default_packages | list }}'
-  when: not git_packages
-
-- include: package.yml
-- include: configure.yml
+git_default_packages:
+  - name: git
