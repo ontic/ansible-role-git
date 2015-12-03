@@ -51,13 +51,13 @@ If the value remains omitted, the following packages will be installed by defaul
 | git                    | git                     |
 
 ```
-git_authorize_github: no
+git_authorize_github:
 ```
 
 Whether to add GitHub to SSH known hosts, valid values are `yes` or `no`.
 
 ```
-git_authorize_bitbucket: no
+git_authorize_bitbucket:
 ```
 
 Whether to add BitBucket to SSH known hosts, valid values are `yes` or `no`.

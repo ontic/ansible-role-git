@@ -18,6 +18,7 @@
     group: root
     mode: 0600
     state: '{{ git_authorize_github | ternary("present", "absent") }}'
+  when: git_authorize_github
   tags:
     - configure
     - git
@@ -33,6 +34,7 @@
     group: root
     mode: 0600
     state: '{{ git_authorize_bitbucket | ternary("present", "absent") }}'
+  when: git_authorize_bitbucket
   tags:
     - configure
     - git

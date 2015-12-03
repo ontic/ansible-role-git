@@ -9,7 +9,7 @@
 
 git_ppa:
 git_packages:
-git_authorize_github: no
-git_authorize_bitbucket: no
+git_authorize_github:
+git_authorize_bitbucket:
 git_config:
 git_users:
