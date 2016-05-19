@@ -4,8 +4,6 @@
 
 ```
 git_ppa: ppa:git-core/ppa
-git_authorize_github: yes
-git_authorize_bitbucket: yes
 git_config:
   core:
     autocrlf: false
@@ -49,18 +47,6 @@ If the value remains omitted, the following packages will be installed by defaul
 | Debian/Ubuntu          | RedHat/CentOS           |
 | :--------------------- | :---------------------- |
 | git                    | git                     |
-
-```
-git_authorize_github: no
-```
-
-Whether to add GitHub to SSH known hosts, valid values are `yes` or `no`.
-
-```
-git_authorize_bitbucket: no
-```
-
-Whether to add BitBucket to SSH known hosts, valid values are `yes` or `no`.
 
 ```
 git_config:

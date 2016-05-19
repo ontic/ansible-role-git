@@ -3,12 +3,12 @@
 # through the world-wide-web at this URL: http://www.ontic.com.au/license.html
 # If you did not receive a copy of the license and are unable to obtain it through
 # the world-wide-web, please send an email to license@ontic.com.au immediately.
-# Copyright (c) 2010-2015 Ontic. (http://www.ontic.com.au). All rights reserved.
+# Copyright (c) 2010-2016 Ontic. (http://www.ontic.com.au). All rights reserved.
 
 ---
 
 - name: Git | Debian | Add launchpad PPA.
-  sudo: yes
+  become: yes
   apt_repository:
     repo: '{{ git_ppa }}'
     update_cache: yes
@@ -18,7 +18,7 @@
     - git
 
 - name: Git | Debian | Install Git packages.
-  sudo: yes
+  become: yes
   apt:
     name: '{{ item.name if item.version is not defined else item.name + "=" + item.version }}'
     cache_valid_time: '{{ item.cache_valid_time | default(omit) }}'
@@ -30,14 +30,14 @@
     purge: '{{ item.purge | default(omit) }}'
     state: '{{ item.state | default(omit) }}'
     update_cache: '{{ item.update_cache | default(omit) }}'
-  with_items: git_packages
+  with_items: '{{ git_packages }}'
   when: ansible_os_family == 'Debian' and git_packages
   tags:
     - package
     - git
 
 - name: Git | RedHat | Install Git packages.
-  sudo: yes
+  become: yes
   yum:
     name: '{{ item.name if item.version is not defined else item.name + "-" + item.version }}'
     conf_file: '{{ item.conf_file | default(omit) }}'
@@ -48,7 +48,7 @@
     list: '{{ item.list | default(omit) }}'
     state: '{{ item.state | default(omit) }}'
     update_cache: '{{ item.update_cache | default(omit) }}'
-  with_items: git_packages
+  with_items: '{{ git_packages }}'
   when: ansible_os_family == 'RedHat' and git_packages
   tags:
     - package

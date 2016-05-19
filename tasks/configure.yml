@@ -3,42 +3,12 @@
 # through the world-wide-web at this URL: http://www.ontic.com.au/license.html
 # If you did not receive a copy of the license and are unable to obtain it through
 # the world-wide-web, please send an email to license@ontic.com.au immediately.
-# Copyright (c) 2010-2015 Ontic. (http://www.ontic.com.au). All rights reserved.
+# Copyright (c) 2010-2016 Ontic. (http://www.ontic.com.au). All rights reserved.
 
 ---
 
-- name: Git | Configure SSH known hosts file with GitHub key.
-  sudo: yes
-  lineinfile:
-    regexp: '^github\.com'
-    line: '{{ lookup("pipe", "ssh-keyscan -t rsa github.com") }}'
-    dest: /etc/ssh/ssh_known_hosts
-    create: true
-    owner: root
-    group: root
-    mode: 0600
-    state: '{{ git_authorize_github | ternary("present", "absent") }}'
-  tags:
-    - configure
-    - git
-
-- name: Git | Configure SSH known hosts file with BitBucket key.
-  sudo: yes
-  lineinfile:
-    regexp: '^bitbucket\.org'
-    line: '{{ lookup("pipe", "ssh-keyscan -t rsa bitbucket.org") }}'
-    dest: /etc/ssh/ssh_known_hosts
-    create: true
-    owner: root
-    group: root
-    mode: 0600
-    state: '{{ git_authorize_bitbucket | ternary("present", "absent") }}'
-  tags:
-    - configure
-    - git
-
 - name: Git | Configure system Git config file.
-  sudo: yes
+  become: yes
   template:
     src: system.gitconfig.j2
     dest: /etc/gitconfig
@@ -51,25 +21,25 @@
     - git
 
 - name: Git | Configure absent Git config files.
-  sudo: yes
+  become: yes
   file:
     path: '/home/{{ item.username }}/.gitconfig'
     state: absent
-  with_items: git_users
+  with_items: '{{ git_users }}'
   when: git_users and item.state | default('present') == 'absent'
   tags:
     - configure
     - git
 
 - name: Git | Configure present Git user config files.
-  sudo: yes
+  become: yes
   template:
     src: user.gitconfig.j2
     dest: '/home/{{ item.username }}/.gitconfig'
     owner: '{{ item.username }}'
     group: '{{ item.group | default(item.username) }}'
     mode:  '{{ item.mode | default(0644) }}'
-  with_items: git_users
+  with_items: '{{ git_users }}'
   when: git_users and item.state | default('present') == 'present'
   tags:
     - configure
