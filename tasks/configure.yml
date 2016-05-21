@@ -16,9 +16,6 @@
     group: root
     mode: 0644
   when: git_config
-  tags:
-    - configure
-    - git
 
 - name: Git | Configure absent Git config files.
   become: yes
@@ -27,9 +24,6 @@
     state: absent
   with_items: '{{ git_users }}'
   when: git_users and item.state | default('present') == 'absent'
-  tags:
-    - configure
-    - git
 
 - name: Git | Configure present Git user config files.
   become: yes
@@ -41,6 +35,3 @@
     mode:  '{{ item.mode | default(0644) }}'
   with_items: '{{ git_users }}'
   when: git_users and item.state | default('present') == 'present'
-  tags:
-    - configure
-    - git

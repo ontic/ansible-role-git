@@ -13,9 +13,6 @@
     repo: '{{ git_ppa }}'
     update_cache: yes
   when: ansible_os_family == 'Debian' and git_ppa
-  tags:
-    - package
-    - git
 
 - name: Git | Debian | Install Git packages.
   become: yes
@@ -32,9 +29,6 @@
     update_cache: '{{ item.update_cache | default(omit) }}'
   with_items: '{{ git_packages }}'
   when: ansible_os_family == 'Debian' and git_packages
-  tags:
-    - package
-    - git
 
 - name: Git | RedHat | Install Git packages.
   become: yes
@@ -50,6 +44,3 @@
     update_cache: '{{ item.update_cache | default(omit) }}'
   with_items: '{{ git_packages }}'
   when: ansible_os_family == 'RedHat' and git_packages
-  tags:
-    - package
-    - git
