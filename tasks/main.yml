@@ -7,34 +7,34 @@
 
 ---
 
-- name: Git | Include OS-specific variables.
+- name: 'Git | Include OS-specific variables.'
   include_vars: '{{ ansible_os_family }}.yml'
   tags:
-    - git
-    - git-package
-    - git-configure
-    - package
-    - configure
+    - 'git'
+    - 'git-package'
+    - 'git-configure'
+    - 'package'
+    - 'configure'
 
-- name: Git | Define Git packages.
+- name: 'Git | Define Git packages.'
   set_fact:
-    git_packages: '{{ git_default_packages | list }}'
-  when: not git_packages
+    git_packages: '{{ git_default_packages }}'
+  when: '{{ not git_packages }}'
   tags:
-    - git
-    - git-package
-    - git-configure
-    - package
-    - configure
+    - 'git'
+    - 'git-package'
+    - 'git-configure'
+    - 'package'
+    - 'configure'
 
-- include: package.yml
+- include: 'package.yml'
   tags:
-    - git
-    - git-package
-    - package
+    - 'git'
+    - 'git-package'
+    - 'package'
 
-- include: configure.yml
+- include: 'configure.yml'
   tags:
-    - git
-    - git-configure
-    - configure
+    - 'git'
+    - 'git-configure'
+    - 'configure'

@@ -7,31 +7,31 @@
 
 ---
 
-- name: Git | Configure system Git config file.
+- name: 'Git | Configure system Git config file.'
   become: yes
   template:
-    src: system.gitconfig.j2
-    dest: /etc/gitconfig
-    owner: root
-    group: root
-    mode: 0644
-  when: git_config
+    src: 'system.gitconfig.j2'
+    dest: '/etc/gitconfig'
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+  when: '{{ git_config }}'
 
-- name: Git | Configure absent Git config files.
+- name: 'Git | Configure absent Git config files.'
   become: yes
   file:
     path: '/home/{{ item.username }}/.gitconfig'
-    state: absent
+    state: 'absent'
   with_items: '{{ git_users }}'
-  when: git_users and item.state | default('present') == 'absent'
+  when: '{{ git_users and item.state | default("present") == "absent" }}'
 
-- name: Git | Configure present Git user config files.
+- name: 'Git | Configure present Git user config files.'
   become: yes
   template:
-    src: user.gitconfig.j2
+    src: 'user.gitconfig.j2'
     dest: '/home/{{ item.username }}/.gitconfig'
     owner: '{{ item.username }}'
     group: '{{ item.group | default(item.username) }}'
     mode:  '{{ item.mode | default(0644) }}'
   with_items: '{{ git_users }}'
-  when: git_users and item.state | default('present') == 'present'
+  when: '{{ git_users and item.state | default("present") == "present" }}'

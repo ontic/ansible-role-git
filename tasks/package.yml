@@ -7,14 +7,14 @@
 
 ---
 
-- name: Git | Debian | Add launchpad PPA.
+- name: 'Git | Debian | Add launchpad PPA.'
   become: yes
   apt_repository:
     repo: '{{ git_ppa }}'
     update_cache: yes
-  when: ansible_os_family == 'Debian' and git_ppa
+  when: '{{ ansible_os_family == "Debian" and git_ppa }}'
 
-- name: Git | Debian | Install Git packages.
+- name: 'Git | Debian | Install Git packages.'
   become: yes
   apt:
     name: '{{ item.name if item.version is not defined else item.name + "=" + item.version }}'
@@ -28,9 +28,9 @@
     state: '{{ item.state | default(omit) }}'
     update_cache: '{{ item.update_cache | default(omit) }}'
   with_items: '{{ git_packages }}'
-  when: ansible_os_family == 'Debian' and git_packages
+  when: 'ansible_os_family == "Debian" and git_packages }}'
 
-- name: Git | RedHat | Install Git packages.
+- name: 'Git | RedHat | Install Git packages.'
   become: yes
   yum:
     name: '{{ item.name if item.version is not defined else item.name + "-" + item.version }}'
@@ -43,4 +43,4 @@
     state: '{{ item.state | default(omit) }}'
     update_cache: '{{ item.update_cache | default(omit) }}'
   with_items: '{{ git_packages }}'
-  when: ansible_os_family == 'RedHat' and git_packages
+  when: '{{ ansible_os_family == "RedHat" and git_packages }}'

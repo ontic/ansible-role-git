@@ -8,4 +8,4 @@
 ---
 
 git_default_packages:
-  - name: git
+  - name: 'git'
