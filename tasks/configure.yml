@@ -15,7 +15,7 @@
     owner: 'root'
     group: 'root'
     mode: '0644'
-  when: '{{ git_config }}'
+  when: '{{ git_config | default(None) != None }}'
 
 - name: 'Git | Configure absent Git config files.'
   become: yes
@@ -23,7 +23,7 @@
     path: '/home/{{ item.username }}/.gitconfig'
     state: 'absent'
   with_items: '{{ git_users }}'
-  when: '{{ git_users and item.state | default("present") == "absent" }}'
+  when: '{{ git_users | default(None) != None and item.state | default("present") == "absent" }}'
 
 - name: 'Git | Configure present Git user config files.'
   become: yes
@@ -34,4 +34,4 @@
     group: '{{ item.group | default(item.username) }}'
     mode:  '{{ item.mode | default(0644) }}'
   with_items: '{{ git_users }}'
-  when: '{{ git_users and item.state | default("present") == "present" }}'
+  when: '{{ git_users | default(None) != None and item.state | default("present") == "present" }}'
