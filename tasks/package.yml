@@ -1,9 +1,5 @@
-# This source file is subject to the (Open Source Initiative) BSD license
-# that is bundled with this package in the LICENSE file. It is also available
-# through the world-wide-web at this URL: http://www.ontic.com.au/license.html
-# If you did not receive a copy of the license and are unable to obtain it through
-# the world-wide-web, please send an email to license@ontic.com.au immediately.
-# Copyright (c) 2010-2016 Ontic. (http://www.ontic.com.au). All rights reserved.
+# Copyright (c) Ontic. (http://www.ontic.com.au). All rights reserved.
+# See the COPYING file bundled with this package for license details.
 
 ---
 
@@ -12,7 +8,7 @@
   apt_repository:
     repo: '{{ git_ppa }}'
     update_cache: yes
-  when: '{{ ansible_os_family == "Debian" and git_ppa | default(None) != None }}'
+  when: 'ansible_os_family == "Debian" and git_ppa | default(None) != None'
 
 - name: 'Git | Debian | Install Git packages.'
   become: yes
@@ -28,7 +24,7 @@
     state: '{{ item.state | default(omit) }}'
     update_cache: '{{ item.update_cache | default(omit) }}'
   with_items: '{{ git_packages }}'
-  when: '{{ ansible_os_family == "Debian" and git_packages | default(None) != None }}'
+  when: 'ansible_os_family == "Debian" and git_packages | default(None) != None'
 
 - name: 'Git | RedHat | Install Git packages.'
   become: yes
@@ -43,4 +39,4 @@
     state: '{{ item.state | default(omit) }}'
     update_cache: '{{ item.update_cache | default(omit) }}'
   with_items: '{{ git_packages }}'
-  when: '{{ ansible_os_family == "RedHat" and git_packages | default(None) != None }}'
+  when: 'ansible_os_family == "RedHat" and git_packages | default(None) != None'

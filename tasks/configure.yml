@@ -1,9 +1,5 @@
-# This source file is subject to the (Open Source Initiative) BSD license
-# that is bundled with this package in the LICENSE file. It is also available
-# through the world-wide-web at this URL: http://www.ontic.com.au/license.html
-# If you did not receive a copy of the license and are unable to obtain it through
-# the world-wide-web, please send an email to license@ontic.com.au immediately.
-# Copyright (c) 2010-2016 Ontic. (http://www.ontic.com.au). All rights reserved.
+# Copyright (c) Ontic. (http://www.ontic.com.au). All rights reserved.
+# See the COPYING file bundled with this package for license details.
 
 ---
 
@@ -15,7 +11,7 @@
     owner: 'root'
     group: 'root'
     mode: '0644'
-  when: '{{ git_config | default(None) != None }}'
+  when: 'git_config | default(None) != None'
 
 - name: 'Git | Configure absent Git config files.'
   become: yes
@@ -23,7 +19,7 @@
     path: '/home/{{ item.username }}/.gitconfig'
     state: 'absent'
   with_items: '{{ git_users }}'
-  when: '{{ git_users | default(None) != None and item.state | default("present") == "absent" }}'
+  when: 'git_users | default(None) != None and item.state | default("present") == "absent"'
 
 - name: 'Git | Configure present Git user config files.'
   become: yes
@@ -34,4 +30,4 @@
     group: '{{ item.group | default(item.username) }}'
     mode:  '{{ item.mode | default(0644) }}'
   with_items: '{{ git_users }}'
-  when: '{{ git_users | default(None) != None and item.state | default("present") == "present" }}'
+  when: 'git_users | default(None) != None and item.state | default("present") == "present"'
