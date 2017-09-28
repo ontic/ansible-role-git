@@ -3,27 +3,27 @@
 ## Example
 
 ```
-git_ppa: ppa:git-core/ppa
+git_ppa: 'ppa:git-core/ppa'
 git_config:
   core:
-    autocrlf: false
+    autocrlf: 'false'
   color:
-    branch: auto
-    diff: auto
-    interactive: auto
-    status: auto
+    branch: 'auto'
+    diff: 'auto'
+    interactive: 'auto'
+    status: 'auto'
   push:
-    default: matching
+    default: 'matching'
 git_users:
-  - username: vagrant
-    group: vagrant
-    mode: 0644
+  - username: 'vagrant'
+    group: 'vagrant'
+    mode: '0644'
     git_config:
       user:
-        name: John Doe
-        email: john.doe@gmail.com
+        name: 'John Doe'
+        email: 'john.doe@gmail.com'
       github:
-        user: johndoe
+        user: 'johndoe'
 ```
 
 ## Role Variables

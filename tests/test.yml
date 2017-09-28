@@ -1,0 +1,30 @@
+# Copyright (c) Ontic. (http://www.ontic.com.au). All rights reserved.
+# See the COPYING file bundled with this package for license details.
+
+---
+
+- hosts: 'localhost'
+  vars:
+    git_ppa: 'ppa:git-core/ppa'
+    git_config:
+      core:
+        autocrlf: 'false'
+      color:
+        branch: 'auto'
+        diff: 'auto'
+        interactive: 'auto'
+        status: 'auto'
+      push:
+        default: 'matching'
+    git_users:
+      - username: 'vagrant'
+        group: 'vagrant'
+        mode: '0644'
+        git_config:
+          user:
+            name: 'John Doe'
+            email: 'john.doe@gmail.com'
+          github:
+            user: 'johndoe'
+  roles:
+    - { role: 'role_under_test' }
