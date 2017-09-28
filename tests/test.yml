@@ -5,6 +5,11 @@
 
 - hosts: 'localhost'
   vars:
+    account_groups:
+      - name: 'administrator'
+    account_users:
+      - name: 'adam'
+        group: 'administrator'
     git_ppa: 'ppa:git-core/ppa'
     git_config:
       core:
@@ -17,14 +22,15 @@
       push:
         default: 'matching'
     git_users:
-      - username: 'vagrant'
-        group: 'vagrant'
+      - username: 'adam'
+        group: 'administrator'
         mode: '0644'
         git_config:
           user:
-            name: 'John Doe'
-            email: 'john.doe@gmail.com'
+            name: 'Adam Dyson'
+            email: 'adam@doesnotexist.com'
           github:
-            user: 'johndoe'
+            user: 'adamdyson'
   roles:
+    - { role: 'ontic.account' }
     - { role: 'role_under_test' }
