@@ -23,13 +23,13 @@
     - 'package'
     - 'configure'
 
-- include: 'package.yml'
+- import_tasks: 'package.yml'
   tags:
     - 'git'
     - 'git-package'
     - 'package'
 
-- include: 'configure.yml'
+- import_tasks: 'configure.yml'
   tags:
     - 'git'
     - 'git-configure'
